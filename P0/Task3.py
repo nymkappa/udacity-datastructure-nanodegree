@@ -68,10 +68,10 @@ def find_codes_called_by_bangalor_number(calls):
     area_code_called_by_bangalore = []
     for call in calls:
         if is_bangalor_number(call[0]):
-            # print call
             area_code_called_by_bangalore.append(
                 extract_codes_or_mobile_prefix(call[1]))
 
+    # compute ratio of bangalor number calling other bangalor number
     ratio_bangalore_bangalor = round(area_code_called_by_bangalore.count("080") /
         len(area_code_called_by_bangalore) * 100, 2)
 
@@ -82,17 +82,17 @@ def find_codes_called_by_bangalor_number(calls):
 
 find_codes_called_by_bangalor_number(calls)
 
-def tests():
-    """
-    Run basic tests
-    """
-    assert(is_bangalor_number("(080)123456") == True)
-    assert(is_bangalor_number("(080) 123 456") == True)
-    assert(is_bangalor_number("080123456") == False)
+# def tests():
+#     """
+#     Run basic tests
+#     """
+#     assert(is_bangalor_number("(080)123456") == True)
+#     assert(is_bangalor_number("(080) 123 456") == True)
+#     assert(is_bangalor_number("080123456") == False)
 
-    assert(extract_codes_or_mobile_prefix("(01234)123456") == "01234")
-    assert(extract_codes_or_mobile_prefix("(01)123456") == "01")
-    assert(extract_codes_or_mobile_prefix("123498765431") == "1234")
-    assert(extract_codes_or_mobile_prefix("140498765431") == "140")
+#     assert(extract_codes_or_mobile_prefix("(01234)123456") == "01234")
+#     assert(extract_codes_or_mobile_prefix("(01)123456") == "01")
+#     assert(extract_codes_or_mobile_prefix("123498765431") == "1234")
+#     assert(extract_codes_or_mobile_prefix("140498765431") == "140")
 
-tests()
+# tests()

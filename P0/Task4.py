@@ -24,4 +24,30 @@ Print a message:
 <list of numbers>
 The list of numbers should be print out one per line in lexicographic order with no duplicates.
 """
+def get_unique_calling_number(calls):
+    calling_numbers = []
+    for call in calls:
+        calling_numbers.append(call[0])
 
+    return set(calling_numbers)
+
+def find_telemarketers(calls, texts):
+    unique_calling_numbers = list(get_unique_calling_number(calls))
+
+    # we merge both array to we can run comparaison on everything at one
+    communications = calls + texts
+    for communication in communications:
+        for unique_calling_number in unique_calling_numbers[:]:
+            # phone call - simply check the recipient number
+            if (len(communication) == 4 and unique_calling_number == communication[1]):
+                unique_calling_numbers.remove(unique_calling_number)
+                break
+
+            # message  - check both sending and receiving numbers
+            elif(len(communication) == 3 and unique_calling_number in [communication[0], communication[1]]):
+                unique_calling_numbers.remove(unique_calling_number)
+                break
+
+    print("These numbers could be telemarketers: ", *sorted(unique_calling_numbers), sep="\n")
+
+find_telemarketers(calls, texts)

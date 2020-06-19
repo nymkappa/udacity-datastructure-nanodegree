@@ -1,0 +1,41 @@
+# Task0:
+
+Not much going on here. We directly read value from the array.
+The "len()" python function also has a complexity of O(1).
+
+So overall, our solution has worst-case complexity of O(1).
+
+# Task1:
+
+In our solution we simply loop once over the "calls" and "texts".
+Considering that "calls" and "texts" are part of one single input
+for this task, our solution has a worst-case complexity of O(n).
+
+# Task2:
+
+In our solution we first iterate on the "calls" input which has
+a complexity of O(n).
+Then we use the "sorted" function which has a worst case
+complexity of O(nlogn).
+
+Taking the worst of both, we can say that our solution has
+a worst-case complexity of O(n).
+
+# Task3:
+
+Here we are in the same scenario as Task2. We iterate once
+over the "calls" input and we use the "sorted" function after.
+We also use the "count" function which has a complexity of O(n).
+
+Taking the worst of them all, we can say that our solution has
+a worst-case complexity of O(n).
+
+# Task4:
+
+Here we are interating in two dimensions in the "find_telemarketers"
+function. The algorithm should get faster and faster as we keep removing
+entries from "unique_calling_numbers"
+
+But, in the worst situation where all "unique_calling_numbers" are
+actually telemarketers, then our solution will give a worst-case
+complexity of O(n^2).
