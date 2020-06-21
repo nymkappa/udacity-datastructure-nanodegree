@@ -27,4 +27,4 @@ last_index = len(calls) - 1
 print("Last record of calls, " + calls[last_index][0]
     + " calls " + calls[last_index][1]
     + " at time " + calls[last_index][2]
-    + " at time " + calls[last_index][3])
+    + ", lasting " + calls[last_index][3] + " seconds")
