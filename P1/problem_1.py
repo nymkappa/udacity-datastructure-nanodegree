@@ -71,83 +71,112 @@ class LRU_Cache(object):
 # Tests
 ###############################################################################
 
-cache_size = 5
+cache_size = 5 # Tests will fail if you change this as we use string comparison in asserts
 our_cache = LRU_Cache(cache_size)
 cache = our_cache.cache
 cache_history = our_cache.cache_history
 
 # Check if cache is properly initialized
-print "Expect: [-1, -1, -1, -1, -1] []"
-print "Output:", cache, cache_history, '\n'
+print ("TEST: Check initialization")
+print ("Expect: [-1, -1, -1, -1, -1] []")
+print ("Output:", cache, cache_history, '\n')
 assert str(cache) == "[-1, -1, -1, -1, -1]" and str(cache_history) == "[]"
 
-# Check if cache set works properly
+print ("TEST: Check if cache set works properly")
+print ("our_cache.set(1, 1)")
 our_cache.set(1, 1)
-print "Expect: [1, -1, -1, -1, -1] [0]"
-print "Output:", cache, cache_history, '\n'
+print ("Expect: [1, -1, -1, -1, -1] [0]")
+print ("Output:", cache, cache_history)
 assert str(cache) == "[1, -1, -1, -1, -1]" and str(cache_history) == "[0]"
 
+print ("our_cache.set(2, 2)")
 our_cache.set(2, 2)
-print "Expect: [1, 2, -1, -1, -1] [0, 1]"
-print "Output:", cache, cache_history, '\n'
+print ("Expect: [1, 2, -1, -1, -1] [0, 1]")
+print ("Output:", cache, cache_history)
 assert str(cache) == "[1, 2, -1, -1, -1]" and str(cache_history) == "[0, 1]"
 
+print ("our_cache.set(3, 3)")
+print ("our_cache.set(4, 4)")
+print ("our_cache.set(5, 5)")
 our_cache.set(3, 3)
 our_cache.set(4, 4)
 our_cache.set(5, 5)
-print "Expect: [1, 2, 3, 4, 5] [0, 1, 2, 3, 4]"
-print "Output:", cache, cache_history, '\n'
+print ("Expect: [1, 2, 3, 4, 5] [0, 1, 2, 3, 4]")
+print ("Output:", cache, cache_history, '\n')
 assert str(cache) == "[1, 2, 3, 4, 5]" and str(cache_history) == "[0, 1, 2, 3, 4]"
 
-# Check that we can't write outside the cache
+print ("TEST: Check that we can't write outside the cache")
+print ("our_cache.set(-1, -1)")
+print ("our_cache.set(6, 6)")
 our_cache.set(-1, -1)
 our_cache.set(6, 6)
-print "Expect: [1, 2, 3, 4, 5] [0, 1, 2, 3, 4]"
-print "Output:", cache, cache_history, '\n'
+print ("Expect: [1, 2, 3, 4, 5] [0, 1, 2, 3, 4]")
+print ("Output:", cache, cache_history, '\n')
 assert str(cache) == "[1, 2, 3, 4, 5]" and str(cache_history) == "[0, 1, 2, 3, 4]"
 
-# Check that cache history is properly updated
+print ("TEST: Check that cache history is properly updated")
+print ("our_cache.set(4, 6)")
 our_cache.set(4, 6)
-print "Expect: [-1, 2, 3, 6, 5] [1, 2, 3, 4, 3]"
-print "Output:", cache, cache_history, '\n'
+print ("Expect: [-1, 2, 3, 6, 5] [1, 2, 3, 4, 3]")
+print ("Output:", cache, cache_history)
 assert str(cache) == "[-1, 2, 3, 6, 5]" and str(cache_history) == "[1, 2, 3, 4, 3]"
 
+print ("our_cache.set(5, 10)")
 our_cache.set(5, 10)
-print "Expect: [-1, -1, 3, 6, 10] [2, 3, 4, 3, 4]"
-print "Output:", cache, cache_history, '\n'
+print ("Expect: [-1, -1, 3, 6, 10] [2, 3, 4, 3, 4]")
+print ("Output:", cache, cache_history)
 assert str(cache) == "[-1, -1, 3, 6, 10]" and str(cache_history) == "[2, 3, 4, 3, 4]"
 
+print ("our_cache.set(3, 7)")
 our_cache.set(3, 7)
-print "Expect: [-1, -1, 7, 6, 10] [3, 4, 3, 4, 2]"
-print "Output:", cache, cache_history, '\n'
+print ("Expect: [-1, -1, 7, 6, 10] [3, 4, 3, 4, 2]")
+print ("Output:", cache, cache_history)
 assert str(cache) == "[-1, -1, 7, 6, 10]" and str(cache_history) == "[3, 4, 3, 4, 2]"
 
+print ("our_cache.set(1, 9)")
 our_cache.set(1, 9)
-print "Expect: [9, -1, 7, -1, 10] [4, 3, 4, 2, 0]"
-print "Output:", cache, cache_history, '\n'
+print ("Expect: [9, -1, 7, -1, 10] [4, 3, 4, 2, 0]")
+print ("Output:", cache, cache_history)
 assert str(cache) == "[9, -1, 7, -1, 10]" and str(cache_history) == "[4, 3, 4, 2, 0]"
 
+print ("our_cache.set(2, 8)")
 our_cache.set(2, 8)
-print "Expect: [9, 8, 7, -1, -1] [3, 4, 2, 0, 1]"
-print "Output:", cache, cache_history, '\n'
+print ("Expect: [9, 8, 7, -1, -1] [3, 4, 2, 0, 1]")
+print ("Output:", cache, cache_history, '\n')
 assert str(cache) == "[9, 8, 7, -1, -1]" and str(cache_history) == "[3, 4, 2, 0, 1]"
 
-# Check if get works properly
+print ("TEST: Check if get works properly")
+
+print ("our_cache.get(1)")
+print ("Expect: 9", "Output:", our_cache.get(1))
 assert our_cache.get(1) == 9
+
+print ("our_cache.get(2)")
+print ("Expect: 8", "Output:", our_cache.get(2))
 assert our_cache.get(2) == 8
+
+print ("our_cache.get(5)")
+print ("Expect: -1", "Output:", our_cache.get(5))
 assert our_cache.get(5) == -1 # Was too old
+
+print ("our_cache.get(9)")
+print ("Expect: -1", "Output:", our_cache.get(9))
 assert our_cache.get(9) == -1
+
+print ("our_cache.get(-2)")
+print ("Expect: -1", "Output:", our_cache.get(-2))
 assert our_cache.get(-2) == -1
-print "Expect: [9, 8, 7, -1, -1] [2, 0, 1, 0, 1]"
-print "Output:", cache, cache_history, '\n'
+
+print ("Cache state:")
+print ("Expect: [9, 8, 7, -1, -1] [2, 0, 1, 0, 1]")
+print ("Output:", cache, cache_history, '\n')
 assert str(cache) == "[9, 8, 7, -1, -1]" and str(cache_history) == "[2, 0, 1, 0, 1]"
 
-# Make sure we don't unnecessarily erase cache history when
-# accessing the same cache entry multiple time
+print ("TEST: Make sure we don't unnecessarily erase cache history when accessing the same cache entry multiple time")
 for i in range(0, cache_size):
     our_cache.get(1)
-print "Expect: [9, 8, -1, -1, -1] [0, 1, 0, 1, 0]"
-print "Output:", cache, cache_history, '\n'
+print ("Expect: [9, 8, -1, -1, -1] [0, 1, 0, 1, 0]")
+print ("Output:", cache, cache_history, '\n')
 assert str(cache) == "[9, 8, -1, -1, -1]" and str(cache_history) == "[0, 1, 0, 1, 0]"
 
 print("All tests passed")
