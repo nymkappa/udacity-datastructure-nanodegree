@@ -1,6 +1,6 @@
 # Datastructure
 
-For this problem, I choose to use two arrays. One is the cache data itself, which stored the key/value pair information. The other array is a FIFO queue that holds the access history.
+For this problem, I choose to use two arrays. One is the cache data itself, which stored the key/value pair information. The other array is a FIFO queue that holds the access history, it behaves like a hash map as it links a cache index to it history position.
 
 # Complexity
 

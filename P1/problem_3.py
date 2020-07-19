@@ -2,7 +2,6 @@ import sys
 
 debug = False
 
-
 ###########################################################
 # Debug utils
 ###########################################################
@@ -63,10 +62,34 @@ def build_priority_queue(data):
 
 
 ###########################################################
+# Binary search which gives us the index where to insert
+# the new internal node
+###########################################################
+
+def binary_search(nodes, internal_node, start, end):
+    if start == end: 
+        if nodes[start].occurrences > internal_node.occurrences: 
+            return start 
+        else: 
+            return start+1
+  
+    if start > end: 
+        return start 
+  
+    half_index = int((start + end) / 2)
+    if nodes[half_index].occurrences < internal_node.occurrences: 
+        return binary_search(nodes, internal_node, half_index + 1, end) 
+    elif nodes[half_index].occurrences > internal_node.occurrences: 
+        return binary_search(nodes, internal_node, start, half_index - 1) 
+    else: 
+        return half_index 
+
+###########################################################
 # Generate the binary tree from the priority queue
 ###########################################################
 
 def generate_tree(nodes):
+    iteration = 0
     while len(nodes) > 1:
         # Create parent node
         parent = Node()
@@ -78,12 +101,8 @@ def generate_tree(nodes):
         nodes.pop(0)
         nodes.pop(0)
 
-        # Insert the new node at the correct spot
-        insert_index = 0
-        for node in nodes:
-            if node.occurrences > parent.occurrences:
-                break
-            insert_index += 1
+        # binary search to find spot to insert
+        insert_index = binary_search(nodes, parent, 0, len(nodes) - 1)
         nodes.insert(insert_index, parent)
         if debug is True:
             print_nodes(nodes)
@@ -169,6 +188,9 @@ def decode_char(root, encoded_data):
 ###########################################################
 
 def huffman_decoding(data, tree):
+    if (tree is None or len(data) < 1):
+        raise Exception("data or tree cannot be empty")
+
     decoded_data = ""
 
     while len(data) > 0:
@@ -188,21 +210,58 @@ def huffman_decoding(data, tree):
 if __name__ == "__main__":
     codes = {}
 
-    a_great_sentence = "The bird is the word"
-    huffman_encoding(a_great_sentence)
+    test_strings = [
+        "AAAAAAABBBCCCCCCCDDEEEEEE",
+        "Buy Bitcoin today and you will be free tomorrow",
+        "zAANxaqH2n0GRqa4wvtf",
+        "zAANxaqH2n0GRqa4wvtfzAANxaqH2n0GRqa4wvtf",
+    ]
 
-    print ("The size of the data is: {}\n".format(
-        sys.getsizeof(a_great_sentence)))
-    print ("The content of the data is: {}\n".format(a_great_sentence))
+    for test_str in test_strings:
+        # Check if encoding then decoding gives back the same string
+        # Also check if the encoded string takes less space than the original string
+        print('Test string: ' + test_str)
+        print ("The size of the test string is: {}".format(sys.getsizeof(test_str)))
+        encoded_data, tree = huffman_encoding(test_str)
+        print('Encoded: ' + encoded_data)
+        print ("The size of the encoded test string is: {}".format(sys.getsizeof(int(encoded_data, base=2))))
+        decoded_data = huffman_decoding(encoded_data, tree)
+        print('Decoded: ' + decoded_data)
+        assert(decoded_data == test_str)
+        assert(sys.getsizeof(int(encoded_data, base=2)) < sys.getsizeof(test_str))
+        print()
 
-    encoded_data, tree = huffman_encoding(a_great_sentence)
+    # Make sure the program raises an Exception if we send an empty string
+    exception_raised = False
+    try:
+        test_str = ""
+        print('Test string: ' + test_str)
+        encoded_data, tree = huffman_encoding(test_str)
+    except Exception:
+        exception_raised = True
+    print('An empty string raises an Exception:', exception_raised)
+    assert(exception_raised)
+    print()
 
-    print ("The size of the encoded data is: {}\n".format(
-        sys.getsizeof(int(encoded_data, base=2))))
-    print ("The content of the encoded data is: {}\n".format(encoded_data))
+    # Make sure the program raises an Exception if we only have one characeter
+    exception_raised = False
+    try:
+        test_str = "aaaaaaaaa"
+        print('Test string: ' + test_str)
+        encoded_data, tree = huffman_encoding(test_str)
+    except Exception:
+        exception_raised = True
+    print('An string with only one character raises an Exception:', exception_raised)
+    assert exception_raised
+    print()
 
-    decoded_data = huffman_decoding(encoded_data, tree)
-
-    print ("The size of the decoded data is: {}\n".format(
-        sys.getsizeof(decoded_data)))
-    print ("The content of the decoded data is: {}\n".format(decoded_data))
+    # Make sure the program raises an Exception if we try to decode invalid data
+    exception_raised = False
+    try:
+        print('Test decode with invalid input')
+        encoded_data, tree = huffman_encoding(None, None)
+    except Exception:
+        exception_raised = True
+    print('Invalid data to decode raises an Exception:', exception_raised)
+    assert exception_raised
+    print()
