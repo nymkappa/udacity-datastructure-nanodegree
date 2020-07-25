@@ -1,4 +1,4 @@
-# Datastructure
+# Data structure
 
 For this problem, the only datastructure we use in an array, which holds the file list.
 
