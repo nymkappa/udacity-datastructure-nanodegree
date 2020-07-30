@@ -4,7 +4,7 @@ For this problem, I choose to use two arrays. One is the cache data itself, whic
 
 # Complexity
 
-By using two arrays for this problem, we are able to keep a complexity of O(1):
+By using two arrays for this problem, we are able to keep a complexity of O(1), in exchange for twice a much used memory. But we keep the space complexity to O(n) so it's still okay.
 
 * `get()` function simply access the cache index directly.
 * `set()` function also set the value at index directly
