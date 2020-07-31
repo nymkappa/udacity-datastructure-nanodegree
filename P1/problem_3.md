@@ -27,9 +27,16 @@ Note: The priority queue and the binary tree both shares a common structure, whi
 
 We can see that we have a worst case complexity of O(nlogn) for the encoding part.
 
+To encode we first generate a temporary map to count occurrences, with a maximum O(n).
+Then we generate the tree and encoding table, with both also a maximum of O(n).
+So our worst space complexity would be O(n) overall.
+
 ## Decoding
 
 For the decoding part, we run a binary search in the tree for each character (the algorithm does the opposite way, but the idea is the same). This operation is O(logn). So to decode the complete data we have a complexity of O(nlogn).
+
+We have a worst space complexity of O(n) to store the decoded string.
+However, the way we implemented our decode_char function, we generate a sub-array for each recursive call, which could be improved by just sending indices. So here our space complexity depends on the depth of the Huffman tree. In the worst case, we have a complete balanced tree, so for each letter we need to make huffman_tree_depth recursive calls.
 
 # Notes
 

@@ -73,7 +73,7 @@ if __name__ == "__main__":
     file_list = []
     find_files(".h", "./testdir/subdir1", file_list)
     print ("Expect: ['./testdir/subdir1/a.h']")
-    print ("Output: ", file_list, "\n")
+    print ("Output:", file_list, "\n")
     assert len(file_list) == 1
     assert str(file_list) == "['./testdir/subdir1/a.h']"
 
@@ -81,7 +81,7 @@ if __name__ == "__main__":
     file_list = []
     find_files("", "./testdir/subdir1", file_list)
     print ("Expect: ['./testdir/subdir1/a.c', './testdir/subdir1/a.h']")
-    print ("Output: ", file_list, "\n")
+    print ("Output:", file_list, "\n")
     assert len(file_list) == 2
     assert str(file_list) == "['./testdir/subdir1/a.c', './testdir/subdir1/a.h']"
 
@@ -89,7 +89,7 @@ if __name__ == "__main__":
     file_list = []
     find_files(".c", "./testdir/subdir3", file_list)
     print ("Expect: ['./testdir/subdir3/subsubdir1/b.c']")
-    print ("Output: ", file_list, "\n")
+    print ("Output:", file_list, "\n")
     assert len(file_list) == 1
     assert str(file_list) == "['./testdir/subdir3/subsubdir1/b.c']"
 
@@ -97,7 +97,7 @@ if __name__ == "__main__":
     file_list = []
     find_files("abcdef", "./", file_list)
     print ("Expect: []")
-    print ("Output: ", file_list, "\n")
+    print ("Output:", file_list, "\n")
     assert len(file_list) == 0
     assert str(file_list) == "[]"
 
@@ -105,7 +105,7 @@ if __name__ == "__main__":
     file_list = []
     find_files(".gitkeep", "./", file_list)
     print ("Expect: ['./testdir/subdir2/.gitkeep', './testdir/subdir4/.gitkeep']")
-    print ("Output: ", file_list, "\n")
+    print ("Output:", file_list, "\n")
     assert len(file_list) == 2
     assert str(file_list) == "['./testdir/subdir2/.gitkeep', './testdir/subdir4/.gitkeep']"
 
@@ -113,7 +113,7 @@ if __name__ == "__main__":
     file_list = []
     find_files(None, "", file_list)
     print ("Expect: []")
-    print ("Output: ", file_list, "\n")
+    print ("Output:", file_list, "\n")
     assert len(file_list) == 0
     assert str(file_list) == "[]"
 
