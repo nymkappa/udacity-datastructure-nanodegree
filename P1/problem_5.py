@@ -28,11 +28,16 @@ class Blockchain:
         self.blocks = [];
 
     def mine_block(self, data):
+        if data is None:
+            return False
+
         timestamp = time.time()
         if len(self.blocks) == 0: # geneis block
             new_block = Block(timestamp, data, None, 1)
         else:
             previous_block = self.blocks[-1]
+            if previous_block.timestamp > timestamp: # Cannot add a block back in time...
+                return False
             new_block = Block(timestamp, data, previous_block, len(self.blocks) + 1)
 
         self.blocks.append(new_block)
@@ -53,10 +58,24 @@ class Blockchain:
 if __name__ == "__main__":
     blockchain = Blockchain()
 
+    # Check if blocks are properly chained
     blockchain.mine_block("Genesis block")
     blockchain.mine_block("Second block")
     blockchain.mine_block("Third block")
     blockchain.mine_block("Fourth block")
     blockchain.mine_block("Fith block")
-
     blockchain.print_chain()
+
+    # Cannot add a block with no data
+    res = blockchain.mine_block(None)
+    assert(res == False)
+    blockchain.print_chain()
+
+    # Check if we cannot add a new block from the past
+    last_block = blockchain.blocks[-1]
+    last_block.timestamp = 999999999999
+    res = blockchain.mine_block("Sixth block")
+    assert(res == False)
+    blockchain.print_chain()
+
+
