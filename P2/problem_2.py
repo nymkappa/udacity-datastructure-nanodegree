@@ -64,7 +64,6 @@ def test_function(test_case):
 
 import random
 
-
 for i in range(0, 1000):
     arr = sorted(list(set([random.randint(0, 100) for i in range(50)])))
     search = random.randint(0, 100)
