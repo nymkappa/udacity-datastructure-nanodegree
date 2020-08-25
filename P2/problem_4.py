@@ -23,18 +23,15 @@ def sort_012(input_list):
         high_index -= 1
 
     mid_index = low_index
-    # print(low_index, mid_index, high_index)
 
     while mid_index <= high_index:
         if input_list[mid_index] == 0:
             input_list[mid_index], input_list[low_index] = input_list[low_index], input_list[mid_index] 
-            # print("swap", mid_index, low_index, input_list)
             low_index += 1
             mid_index += 1
 
         elif input_list[mid_index] == 2:
             input_list[mid_index], input_list[high_index] = input_list[high_index], input_list[mid_index] 
-            # print("swap", mid_index, high_index, input_list)
             high_index -= 1
 
         elif input_list[mid_index] == 1:
