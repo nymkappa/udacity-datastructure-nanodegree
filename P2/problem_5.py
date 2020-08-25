@@ -36,7 +36,7 @@ class TrieNode:
     def find_child(self, char):
         idx = 0
         while idx < len(self.children):
-            if self.children[idx].char is char:
+            if self.children[idx].char == char:
                 return idx
             idx += 1
 
@@ -92,7 +92,7 @@ wordList = [
     "trie", "trigger", "trigonometry", "tripod"
 ]
 
-# You can test with 25 words
+# # You can test with 25k words
 # with open('words') as my_file:
 #     wordList = my_file.read().splitlines()
 
