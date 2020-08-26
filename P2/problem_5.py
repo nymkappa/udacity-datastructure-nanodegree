@@ -1,39 +1,43 @@
 class TrieNode:
-    def __init__(self, char):
+    def __init__(self, char, end_of_word):
         """
         Initialize this node in the Trie
         """
         self.char = char
         self.children = []
-    
+        self.end_of_word = end_of_word
 
-    def insert(self, char):
+    def insert(self, char, end_of_word):
         """
         Add a child node in this Trie
         """
-        new_child = TrieNode(char)
+        new_child = TrieNode(char, end_of_word)
         self.children.append(new_child)
         return new_child
 
 
-    def suffixes(self, suffix = '', suffixes = []):
+    def suffixes(self, suffix, words):
         """
         Recursive function that collects the suffix for
         all complete words below this point
         """
-        suffix += self.char
-
+        if self.end_of_word is True and len(suffix) > 0:
+            words.append(suffix)
+        
         if len(self.children) == 0:
-            suffixes.append(suffix)
             return
 
         for child in self.children:
-            child.suffixes(suffix, suffixes)
+            suffix_tmp = suffix + child.char
+            child.suffixes(suffix_tmp, words)
 
-        return suffixes
+        return words
 
 
     def find_child(self, char):
+        """
+        Look for a child with char, and return the node
+        """
         idx = 0
         while idx < len(self.children):
             if self.children[idx].char == char:
@@ -48,7 +52,7 @@ class Trie:
         """
         Initialize this Trie (add a root node)
         """
-        self.root = TrieNode(None)
+        self.root = TrieNode(None, False)
 
 
     def insert(self, word):
@@ -57,18 +61,23 @@ class Trie:
         """
         current_node = self.root
 
-        for char in word:
-            match_idx = current_node.find_child(char)
+        idx = 0
+        while idx < len(word):
+            match_idx = current_node.find_child(word[idx])
             if match_idx is None:
-                current_node = current_node.insert(char)
+                current_node = current_node.insert(word[idx], idx == len(word) - 1)
             else:
                 current_node = current_node.children[match_idx]
+            idx += 1
 
 
     def find(self, prefix):
         """
         Find the Trie node that represents this prefix
         """
+        if prefix is None or len(prefix) == 0:
+            return None
+
         current_node = self.root
 
         for char in prefix:
@@ -91,23 +100,38 @@ wordList = [
     "fun", "function", "factory", 
     "trie", "trigger", "trigonometry", "tripod"
 ]
-
-# # You can test with 25k words
-# with open('words') as my_file:
-#     wordList = my_file.read().splitlines()
-
 for word in wordList:
     MyTrie.insert(word)
 
+def test(autocomplete_val, expected):
+    output = None
+    node = MyTrie.find(autocomplete_val)
+    if node is not None:
+        output = node.suffixes('', [])
+    print("Autocomplete for", autocomplete_val, "Expected", expected, "Got", output)
+    assert expected == output
 
-def f(prefix):
-    if prefix != '':
-        prefixNode = MyTrie.find(prefix)
-        if prefixNode:
-            print('\n'.join(prefixNode.suffixes()))
-        else:
-            print(prefix + " not found")
-    else:
-        print('')
+expected = ['nt', 'nthology', 'ntagonist', 'ntonym']
+autocomplete_val = "a";
+test(autocomplete_val, expected)
+test(autocomplete_val, expected)
 
-f("a");
+expected = ['un', 'unction', 'actory']
+autocomplete_val = "f";
+test(autocomplete_val, expected)
+
+expected = ['ction']
+autocomplete_val = "fun";
+test(autocomplete_val, expected)
+
+expected = ['e', 'gger', 'gonometry', 'pod']
+autocomplete_val = "tri";
+test(autocomplete_val, expected)
+
+expected = None
+autocomplete_val = "";
+test(autocomplete_val, expected)
+
+expected = None
+autocomplete_val = None;
+test(autocomplete_val, expected)
