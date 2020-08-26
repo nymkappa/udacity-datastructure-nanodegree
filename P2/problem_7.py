@@ -90,6 +90,9 @@ class Router:
         # return the "not found" handler if you added one
         # bonus points if a path works with and without a trailing slash
         # e.g. /about and /about/ both return the /about handler
+        if path is None or len(path) == 0:
+            return self.not_found_handler
+
         parts = self.split_path(path)
         handler = self.routes.find(parts)
         if handler is None:
@@ -105,24 +108,37 @@ class Router:
         return [part for part in path.split("/") if part != '']
 
 
-# Here are some test cases and expected outputs you can use to test your implementation
+#########################################
+## Tests
+#########################################
 
-# create the router and add a route
-router = Router("root handler", "not found handler") # remove the 'not found handler' if you did not implement this
-router.add_handler("/home/about", "about handler")  # add a route
-router.add_handler("/home/about/us", "about us handler")  # add a route
-router.add_handler("/account/me", "my account handler")  # add a route
-router.add_handler("/account/me/login", "my account login handler")  # add a route
-router.add_handler("/test1/test2/test3/test4", "test handler")  # add a route
+
+router = Router("root handler", "not found handler")
+router.add_handler("/home/about", "about handler")
+router.add_handler("/home/about/us", "about us handler")
+router.add_handler("/account/me", "my account handler")
+router.add_handler("/account/me/login", "my account login handler")
+router.add_handler("/test1/test2/test3/test4", "test handler")
 
 # some lookups with the expected output
-print(router.lookup("/")) # should print 'root handler'
-print(router.lookup("/home")) # should print 'not found handler' or None if you did not implement one
-print(router.lookup("/home/about")) # should print 'about handler'
-print(router.lookup("/home/about/")) # should print 'about handler' or None if you did not handle trailing slashes
-print(router.lookup("/home/about/me")) # should print 'not found handler' or None if you did not implement one
-print(router.lookup("/home/about/us")) # should print 'about us handler'
-print(router.lookup("/account/me")) # should print 'my account handler'
-print(router.lookup("/account/me/login")) # should print 'my account login handler'
-print(router.lookup("/test1/test2/test3/test4")) # should print 'test handler'
-print(router.lookup("/test1/test2")) # should print 'not found handler'
+tests = [
+    ["/", "root handler"],
+    ["/home",  "not found handler"],
+    ["/home/about", "about handler"],
+    ["/home/about/", "about handler"],
+    ["/home/about/me", "not found handler"],
+    ["/home/about/us", "about us handler"],
+    ["/account/me", "my account handler"],
+    ["/account/me/login", "my account login handler"],
+    ["/test1/test2/test3/test4", "test handler"],
+    ["/test1/test2", "not found handler"],
+    ["", "not found handler"],
+    ["/hello", "not found handler"],
+    [None, "not found handler"],
+];
+
+for test in tests:
+    print("Test lookup", test[0], "Expected:", test[1])
+    assert router.lookup(test[0]) == test[1]
+
+print("All tests passed")
