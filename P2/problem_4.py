@@ -50,31 +50,55 @@ def contains_only_012(test_case):
     return True
 
 
-def test_function(test_case):
-    save = test_case.copy()
-    sorted_array = sort_012(test_case)
-
-    if save == None and sorted_array == None:
-        print("Pass:", "Tested", save)
-    elif not contains_only_012(test_case) and sorted_array == None:
-        print("Pass:", "Tested", save)
-    elif sorted_array == sorted(test_case):
-        print("Pass:", "Tested", save)
-    else:
-        print("Fail:", "Tested", save)
-
-
 #########################################
 ## Tests
 #########################################
 
-test_function([])
-test_function([0, 2, 1, 3])
-test_function([0, 2, 0, 0, 0, 0])
-test_function([0, 0, 0, 0])
-test_function([2, 2, 2, 2])
-test_function([1, 1, 1, 1])
-test_function([2, 0])
-test_function([0, 0, 2, 2, 2, 1, 1, 1, 2, 0, 2])
-test_function([2, 1, 2, 0, 0, 2, 1, 0, 1, 0, 0, 2, 2, 2, 1, 2, 0, 0, 0, 2, 1, 0, 2, 0, 0, 1])
-test_function([0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2])
+
+def test_function(input_vals, expected):
+    input_vals_cpy = input_vals.copy()
+    sorted_array = sort_012(input_vals)
+    print("Input", input_vals_cpy, "Expected", expected)
+    assert(sorted_array == expected)
+
+
+input_vals = []
+expected = sorted(input_vals)
+test_function(input_vals, expected)
+
+input_vals = [0, 2, 1, 3]
+expected = sorted(input_vals)
+test_function(input_vals, None)
+
+input_vals = [0, 2, 0, 0, 0, 0]
+expected = sorted(input_vals)
+test_function(input_vals, expected)
+
+input_vals = [0, 0, 0, 0]
+expected = sorted(input_vals)
+test_function(input_vals, expected)
+input_vals = [2, 2, 2, 2]
+expected = sorted(input_vals)
+test_function(input_vals, expected)
+
+input_vals = [1, 1, 1, 1]
+expected = sorted(input_vals)
+test_function(input_vals, expected)
+
+input_vals = [2, 0]
+expected = sorted(input_vals)
+test_function(input_vals, expected)
+
+input_vals = [0, 0, 2, 2, 2, 1, 1, 1, 2, 0, 2]
+expected = sorted(input_vals)
+test_function(input_vals, expected)
+
+input_vals = [2, 1, 2, 0, 0, 2, 1, 0, 1, 0, 0, 2, 2, 2, 1, 2, 0, 0, 0, 2, 1, 0, 2, 0, 0, 1]
+expected = sorted(input_vals)
+test_function(input_vals, expected)
+
+input_vals = [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2]
+expected = sorted(input_vals)
+test_function(input_vals, expected)
+
+print("All test passed")

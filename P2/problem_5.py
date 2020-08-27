@@ -135,3 +135,5 @@ test(autocomplete_val, expected)
 expected = None
 autocomplete_val = None;
 test(autocomplete_val, expected)
+
+print("All tests passed")

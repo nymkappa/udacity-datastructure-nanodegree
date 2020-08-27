@@ -28,7 +28,7 @@ def rearrange_digits(input_list):
     Returns:
        (int),(int): Two maximum sums
     """
-    if len(input_list) < 2:
+    if input_list is None or len(input_list) < 2:
         return None
 
     quick_sort(input_list, 0, len(input_list) - 1)
@@ -50,26 +50,23 @@ def rearrange_digits(input_list):
     return [int(first), int(second)]
 
 
-def test_function(test_case):
-    output = rearrange_digits(test_case[0])
-    solution = test_case[1]
-
-    if output is None and solution is None:
-        print("Pass")
-    elif sum(output) == sum(solution):
-        print("Pass")
-    else:
-        print("Fail")
-
-
 #########################################
 ## Tests
 #########################################
 
-test_case = [[1, 2, 3, 4, 5], [542, 31]]
+def test_function(test_case):
+    output = rearrange_digits(test_case[0])
+    print("Input", test_case[0], "Expected", test_case[1])
+    assert(output == test_case[1])
+
+
+test_case = [[1, 2, 3, 4, 5], [531, 42]]
 test_function(test_case)
 
 test_case = [[4, 6, 2, 5, 9, 8], [964, 852]]
+test_function(test_case)
+
+test_case = [None, None]
 test_function(test_case)
 
 test_case = [[0], None]
@@ -78,8 +75,13 @@ test_function(test_case)
 test_case = [[0, 0], [0, 0]]
 test_function(test_case)
 
-test_case = [[1000, 0], [0, 1000]]
+test_case = [[1000, 0], [1000, 0]]
 test_function(test_case)
 
 test_case = [[5, 8, 7, 6, 9, 4], [975, 864]]
 test_function(test_case)
+
+test_case = [[5, 8, 7, 6, 9, 4], [975, 864]]
+test_function(test_case)
+
+print("All tests passed")

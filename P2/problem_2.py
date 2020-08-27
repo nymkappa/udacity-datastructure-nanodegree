@@ -35,6 +35,9 @@ def rotated_array_search(input_list, number):
     Returns:
        int: Index or -1
     """
+    if len(input_list) == 0 or input_list is None or number is None:
+        return -1
+
     return binary_search(input_list, number, 0, len(input_list) - 1)
 
 
@@ -45,28 +48,26 @@ def linear_search(input_list, number):
     return -1
 
 
-def test_function(test_case):
-    input_list = test_case[0]
-    number = test_case[1]
-
-    print("Search", number, "in", input_list)
-
-    if linear_search(input_list, number) != rotated_array_search(input_list, number):
-        print("Fail", test_case)
-        quit()
-    else:
-        print("Passed")
-
-
 #########################################
 ## Tests
 #########################################
 
+def test_function(test_case):
+    input_list = test_case[0]
+    number = test_case[1]
+
+    expected = linear_search(input_list, number)
+    output = rotated_array_search(input_list, number)
+
+    print("Input", test_case, "Expected", expected)
+    assert(output == expected)
+
+
 import random
 
-for i in range(0, 1000):
-    arr = sorted(list(set([random.randint(0, 100) for i in range(50)])))
-    search = random.randint(0, 100)
+for i in range(0, 10):
+    arr = sorted(list(set([random.randint(0, 20) for i in range(20)])))
+    search = random.randint(0, 20)
     test_function([arr, search])    
 
 test_function([[6, 7, 8, 9, 10, 1, 2, 3, 4], 6])
@@ -74,5 +75,7 @@ test_function([[6, 7, 8, 9, 10, 1, 2, 3, 4], 1])
 test_function([[6, 7, 8, 1, 2, 3, 4], 8])
 test_function([[6, 7, 8, 1, 2, 3, 4], 1])
 test_function([[6, 7, 8, 1, 2, 3, 4], 10])
+test_function([[], -1])
+test_function([[1, 2, 3], None])
 
 print("All tests passed")
