@@ -15,6 +15,7 @@ class RouteTrieNode:
 
 
     def find_child(self, path):
+        # Could be replaced with a map here for better performance
         idx = 0
         while idx < len(self.children):
             if self.children[idx].path == path:
@@ -52,11 +53,10 @@ class RouteTrie:
     def find(self, parts):
         # Starting at the root, navigate the Trie to find a match for this path
         # Return the handler for a match, or None for no match
-        # Similar to our previous example you will want to recursively add nodes
-        # Make sure you assign the handler to only the leaf (deepest) node of this path
         idx = 0
         current_node = self.root
         while idx < len(parts):
+            # Can be replaced by a map for better performance
             match_idx = current_node.find_child(parts[idx])
             if match_idx is None:
                 return None

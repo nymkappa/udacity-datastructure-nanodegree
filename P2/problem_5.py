@@ -4,7 +4,7 @@ class TrieNode:
         Initialize this node in the Trie
         """
         self.char = char
-        self.children = []
+        self.children = {}
         self.end_of_word = end_of_word
 
     def insert(self, char, end_of_word):
@@ -12,7 +12,8 @@ class TrieNode:
         Add a child node in this Trie
         """
         new_child = TrieNode(char, end_of_word)
-        self.children.append(new_child)
+        self.children[char] = new_child
+
         return new_child
 
 
@@ -28,8 +29,8 @@ class TrieNode:
             return
 
         for child in self.children:
-            suffix_tmp = suffix + child.char
-            child.suffixes(suffix_tmp, words)
+            suffix_tmp = suffix + child
+            self.children[child].suffixes(suffix_tmp, words)
 
         return words
 
@@ -38,13 +39,7 @@ class TrieNode:
         """
         Look for a child with char, and return the node
         """
-        idx = 0
-        while idx < len(self.children):
-            if self.children[idx].char == char:
-                return idx
-            idx += 1
-
-        return None
+        return self.children.get(char)
 
         
 class Trie:
@@ -63,11 +58,11 @@ class Trie:
 
         idx = 0
         while idx < len(word):
-            match_idx = current_node.find_child(word[idx])
-            if match_idx is None:
+            child = current_node.find_child(word[idx])
+            if child is None:
                 current_node = current_node.insert(word[idx], idx == len(word) - 1)
             else:
-                current_node = current_node.children[match_idx]
+                current_node = child
             idx += 1
 
 
@@ -81,11 +76,11 @@ class Trie:
         current_node = self.root
 
         for char in prefix:
-            match_idx = current_node.find_child(char)
-            if match_idx is None:
+            child = current_node.find_child(char)
+            if child is None:
                 return None
             else:
-                current_node = current_node.children[match_idx]
+                current_node = child
 
         return current_node
 
