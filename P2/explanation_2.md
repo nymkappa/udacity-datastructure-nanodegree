@@ -4,4 +4,4 @@ This problem did not require any specific data stucture. It behaves like a binar
 
 # Complexity
 
-It's a simple binary search. Nothing special going one. Our time and space complexity are both O(logn).
+It's a simple binary search. Nothing special going one. Our time complexity is O(logn) and our space complexity is O(1).
