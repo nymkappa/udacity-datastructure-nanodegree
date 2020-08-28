@@ -74,3 +74,5 @@ expected = None
 res_fun = sqrt(3.14)
 print ("Compute sqrt of", 3.14, "expected", expected, "got", res_fun)
 assert expected == res_fun
+
+print("All test passed")
