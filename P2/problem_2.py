@@ -11,7 +11,6 @@ def binary_search(input_list, number, start, end):
         return middle
 
     middle_value = input_list[middle]
-    # print(middle, middle_value)
     end_value = input_list[end]
     start_value = input_list[start]
 
@@ -62,7 +61,7 @@ def test_function(test_case):
     expected = linear_search(input_list, number)
     output = rotated_array_search(input_list, number)
 
-    # print("Input", test_case, "Expected", expected, "Got", output)
+    print("Input", test_case, "Expected", expected, "Got", output)
     assert(output == expected)
 
 
